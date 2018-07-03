@@ -1,0 +1,67 @@
+﻿{
+    "output_file": "settings.json",
+
+    "commandBid": {
+        "type": "textbox",
+        "value": "!bid",
+        "label": "Bid Command",
+        "tooltip": "With this command users can bid",
+        "group": "Commands"
+    },
+    "commandStartBid": {
+        "type": "textbox",
+        "value": "!startBid",
+        "label": "Start Bid Command",
+        "tooltip": "With this command the Caster can start an auction",
+        "group": "Commands"
+    },
+    "commandStopBid": {
+        "type": "textbox",
+        "value": "!stopBid",
+        "label": "Stop Bid Command",
+        "tooltip": "With this command the Caster can stop an auction",
+        "group": "General"
+    },
+    "languageBidNotRunning": {
+        "type": "textbox",
+        "value": "An active bid is currently not running!",
+        "label": "languageBidNotRunning",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageBidAlreadyStarted": {
+        "type": "textbox",
+        "value": "Bid is already in progress. Stop the bid first!",
+        "label": "languageBidAlreadyStarted",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageBidNoCooldownParam": {
+        "type": "textbox",
+        "value": "Please use the correct syntax: {0} <1-999 seconds>",
+        "label": "languageBidNoCooldownParam",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageBidGameStarted": {
+        "type": "textbox",
+        "value": "{0} has opend an auction. Type {1} <1-9999> to place a bid!",
+        "label": "languageBidGameStarted",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageBidGameClosed": {
+        "type": "textbox",
+        "value": "{0} has closed the auction.",
+        "label": "languageBidGameClosed",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageNewBidLeader": {
+        "type": "textbox",
+        "value": "{0} is now leading with {1} {2}.",
+        "label": "languageNewBidLeader",
+        "tooltip": "",
+        "group": "Language"
+    }
+}
