@@ -1,6 +1,23 @@
 ﻿{
     "output_file": "settings.json",
 
+    "finalCountdownStart": {
+        "type": "slider",
+        "value": 10,
+        "min": 10,
+        "max": 20,
+        "ticks": 1,
+        "label": "Final Countdown Seconds",
+        "tooltip": "If the counter reaches this value, all new bits will reset the counter to this value. Example: When a user called a bid in the last 3 seconds, he will count again from 10 to let other the chance to bid.",
+        "group": "General"
+    },
+    "defaultCountdown": {
+        "type": "numberbox",
+        "value": 120,
+        "label": "Default Countdown Seconds",
+        "tooltip": "When you activate the auction, at which countdown he should start to count by default? You can overwrite it a param behind the start command. Example: !startBid 500",
+        "group": "General"
+    },
     "commandBid": {
         "type": "textbox",
         "value": "!bid",
@@ -12,7 +29,7 @@
         "type": "textbox",
         "value": "!startBid",
         "label": "Start Bid Command",
-        "tooltip": "With this command the Caster can start an auction",
+        "tooltip": "With this command the Caster can start an auction. First argument parameter is the countdown in seconds. If empty, the default value will be used.",
         "group": "Commands"
     },
     "commandStopBid": {
@@ -20,7 +37,7 @@
         "value": "!stopBid",
         "label": "Stop Bid Command",
         "tooltip": "With this command the Caster can stop an auction",
-        "group": "General"
+        "group": "Commands"
     },
     "languageBidNotRunning": {
         "type": "textbox",
@@ -36,16 +53,9 @@
         "tooltip": "",
         "group": "Language"
     },
-    "languageBidNoCooldownParam": {
-        "type": "textbox",
-        "value": "Please use the correct syntax: {0} <1-999 seconds>",
-        "label": "languageBidNoCooldownParam",
-        "tooltip": "",
-        "group": "Language"
-    },
     "languageBidGameStarted": {
         "type": "textbox",
-        "value": "{0} has opend an auction. Type {1} <1-9999> to place a bid!",
+        "value": "{0} has opened an auction for {1} seconds. Type {2} <1-9999> to place a bid!",
         "label": "languageBidGameStarted",
         "tooltip": "",
         "group": "Language"
@@ -61,6 +71,41 @@
         "type": "textbox",
         "value": "{0} is now leading with {1} {2}.",
         "label": "languageNewBidLeader",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageCountdownNobody": {
+        "type": "textbox",
+        "value": "{0} seconds left... Nobody did a bid yet.",
+        "label": "languageCountdownNobody",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageCountdownNormal": {
+        "type": "textbox",
+        "value": "{0} seconds left... {1} is on the lead with {2} {3}.",
+        "label": "languageCountdownNormal",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageCountdownFinal": {
+        "type": "textbox",
+        "value": "Last {0} seconds!! {1} is leading with {2} {3}.",
+        "label": "languageCountdownFinal",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageWon": {
+        "type": "textbox",
+        "value": "{0} has won this auction with a bid of {1} {2}. Congratulations.",
+        "label": "languageWon",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageNobodyWon": {
+        "type": "textbox",
+        "value": "Nobody did a bid. Sadly, nobody wins :(",
+        "label": "languageNobodyWon",
         "tooltip": "",
         "group": "Language"
     }
