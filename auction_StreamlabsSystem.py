@@ -18,13 +18,13 @@ ScriptName = "Auction"
 Website = "https://www.twitch.tv/frittenfettsenpai"
 Description = "Auction System. Right click and add api key!"
 Creator = "frittenfettsenpai"
-Version = "0.0.3"
+Version = "0.9.1"
 
 # ---------------------------------------
 #   [Required] Intialize Data (Only called on Load)
 # ---------------------------------------
 def Init():
-    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor
+    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor, lockCountdownConflict
     settingsfile = os.path.join(os.path.dirname(__file__), "settings.json")
 
     try:
@@ -50,7 +50,8 @@ def Init():
         }
     bidMaxAmount = 0
     bidEnabled = 0
-    activeFor = 0
+    lockCountdownConflict = 0
+    activeFor = -312
     bidMaxUser = ""
     return
 
@@ -59,7 +60,7 @@ def Init():
 #   [Required] Execute Data / Process Messages
 # ---------------------------------------
 def Execute(data):
-    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor
+    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor, lockCountdownConflict
     if data.IsChatMessage():
         user = data.User
         username = Parent.GetDisplayName(user)
@@ -70,7 +71,9 @@ def Execute(data):
                 bidMaxUser = user
                 if activeFor < settings["finalCountdownStart"]:
                     activeFor = settings["finalCountdownStart"]
-                Parent.SendTwitchMessage(settings["languageNewBidLeader"].format(username, bidMaxAmount, Parent.GetCurrencyName()))
+                    lockCountdownConflict = 1
+                else:
+                    Parent.SendTwitchMessage(settings["languageNewBidLeader"].format(username, bidMaxAmount, Parent.GetCurrencyName()))
         elif (data.GetParam(0) == settings["commandStartBid"]):
             if (bidEnabled == 1):
                 Parent.SendStreamWhisper(user, settings["languageBidAlreadyStarted"])
@@ -80,7 +83,7 @@ def Execute(data):
                 else:
                     activeFor = settings["defaultCountdown"]
                 Parent.SendTwitchMessage(settings["languageBidGameStarted"].format(user, activeFor, settings["commandBid"]))
-                start_game()
+                bidEnabled = 1
         elif (data.GetParam(0) == settings["commandStopBid"]):
             if (bidEnabled == 0):
                 Parent.SendStreamWhisper(user, settings["languageBidNotRunning"])
@@ -94,31 +97,30 @@ def Execute(data):
 #    [Required] Tick Function
 #---------------------------------------
 def Tick():
-    return
+    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor, lockCountdownConflict
+    if bidEnabled == 0 or activeFor == -312:
+        return
 
-
-
-def start_game():
-    global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor
-    bidEnabled = 1
-    bidMaxAmount = 0
-    bidMaxUser = ""
-    while activeFor > 0 and bidEnabled == 1:
+    if activeFor > 0:
         if activeFor == 30 or activeFor == 60 or activeFor == settings["finalCountdownStart"]:
             if bidMaxUser != "":
                 bitMaxUsername = Parent.GetDisplayName(bidMaxUser)
                 if activeFor == settings["finalCountdownStart"]:
                     Parent.SendTwitchMessage(settings["languageCountdownFinal"].format(activeFor, bitMaxUsername, bidMaxAmount,Parent.GetCurrencyName()))
+                    activeFor = activeFor - 1
+                    time.sleep(3)
                 else:
                     Parent.SendTwitchMessage(settings["languageCountdownNormal"].format(activeFor, bitMaxUsername, bidMaxAmount, Parent.GetCurrencyName()))
             else:
                 Parent.SendTwitchMessage(settings["languageCountdownNobody"].format(activeFor))
-        time.sleep(1)
-        activeFor = activeFor - 1
-    if bidEnabled == 1:
+    else:
         end_game()
+    time.sleep(1)
+    if lockCountdownConflict == 1:
+        lockCountdownConflict = 0
+    else:
+        activeFor = activeFor - 1
     return
-
 
 def end_game():
     global settings, bidMaxAmount, bidMaxUser, bidEnabled, activeFor
@@ -129,13 +131,15 @@ def end_game():
         reset_game()
     else:
         Parent.SendTwitchMessage(settings["languageNobodyWon"])
+        reset_game()
     return
 
 
 def reset_game():
-    global bidMaxAmount, bidMaxUser, bidEnabled, activeFor
+    global bidMaxAmount, bidMaxUser, bidEnabled, activeFor, lockCountdownConflict
     bidEnabled = 0
     bidMaxAmount = 0
-    activeFor = 0
+    lockCountdownConflict = 0
+    activeFor = -312
     bidMaxUser = ""
     return
