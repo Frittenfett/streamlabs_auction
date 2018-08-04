@@ -3,22 +3,19 @@
 # ---------------------------------------
 import json
 import codecs
-import re
 import os
 import clr
-clr.AddReference("IronPython.Modules.dll")
-import urllib
 import time
-import random
+clr.AddReference("IronPython.Modules.dll")
 
 # ---------------------------------------
 #   [Required]  Script Information
 # ---------------------------------------
 ScriptName = "Auction"
 Website = "https://www.twitch.tv/frittenfettsenpai"
-Description = "Auction System. Right click and add api key!"
+Description = "Auction System. Let the biggest bid win whatever you want."
 Creator = "frittenfettsenpai"
-Version = "0.9.1"
+Version = "1.0.0"
 
 # ---------------------------------------
 #   [Required] Intialize Data (Only called on Load)
@@ -108,7 +105,8 @@ def Tick():
                 if activeFor == settings["finalCountdownStart"]:
                     Parent.SendTwitchMessage(settings["languageCountdownFinal"].format(activeFor, bitMaxUsername, bidMaxAmount,Parent.GetCurrencyName()))
                     activeFor = activeFor - 1
-                    time.sleep(3)
+                    time.sleep(2) # Sending messages may take a while
+                    lockCountdownConflict = 0
                 else:
                     Parent.SendTwitchMessage(settings["languageCountdownNormal"].format(activeFor, bitMaxUsername, bidMaxAmount, Parent.GetCurrencyName()))
             else:
@@ -116,9 +114,7 @@ def Tick():
     else:
         end_game()
     time.sleep(1)
-    if lockCountdownConflict == 1:
-        lockCountdownConflict = 0
-    else:
+    if lockCountdownConflict == 0:
         activeFor = activeFor - 1
     return
 
