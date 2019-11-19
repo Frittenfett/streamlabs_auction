@@ -4,7 +4,7 @@
 The available default commands are:
 * !startBid {(opt)ForXSeconds} (Caster only)
 * !stopBid (Caster only)
-* !bid {number} (Caster only)
+* !bid {number}
 
 Open an auction with !startBid. Witout parameter, the auction will be opend until default time (config).
 
