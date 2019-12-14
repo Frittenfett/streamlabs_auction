@@ -18,6 +18,13 @@
         "tooltip": "When you activate the auction, at which countdown he should start to count by default? You can overwrite it a param behind the start command. Example: !startBid 500",
         "group": "General"
     },
+    "minimumBidIncrease": {
+        "type": "numberbox",
+        "value": 100,
+        "label": "Minimum Bid Increase",
+        "tooltip": "What is the minum amount to bid? To prevent to outbit by one. Default is 200. Set to 0 to disable ",
+        "group": "General"
+    },
     "commandBid": {
         "type": "textbox",
         "value": "!bid",
@@ -106,6 +113,20 @@
         "type": "textbox",
         "value": "Nobody did a bid. Sadly, nobody wins :(",
         "label": "languageNobodyWon",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageMinimumBid": {
+        "type": "textbox",
+        "value": "The bid value has to be at least {0} {1} higher! Next minimum possible bid: {3} {1}!",
+        "label": "languageMinimumBid",
+        "tooltip": "",
+        "group": "Language"
+    },
+    "languageBidWithLowestBid": {
+        "type": "textbox",
+        "value": "The lowest bid has to be {0} {1}!",
+        "label": "languageBidWithLowestBid",
         "tooltip": "",
         "group": "Language"
     }

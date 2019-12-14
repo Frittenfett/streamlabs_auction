@@ -2,7 +2,7 @@
 
 ### this scripts adds the auction system to your streamlabs chatbot.
 The available default commands are:
-* !startBid {(opt)ForXSeconds} (Caster only)
+* !startBid {(opt)MinimumBiddingPrice} {(opt)ForXSeconds} (Caster only)
 * !stopBid (Caster only)
 * !bid {number}
 
@@ -20,3 +20,7 @@ Have fun :)
 ### Changelog
 
 * v1.0.0 Major Release
+<<<<<<< Updated upstream
+=======
+* v1.1.0 Add minimum bidding price at start and minimum bid increase
+>>>>>>> Stashed changes
